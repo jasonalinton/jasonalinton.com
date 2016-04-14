@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="jasonalinton.com" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^\\\\psf\\home\\Documents\\Visual\ Studio\ 2015\\Projects\\jasonalinton\\jasonalinton\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^\\\\psf\\home\\Documents\\Visual\ Studio\ 2015\\Projects\\jasonalinton\\jasonalinton\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="data source=.\SQLEXPRESS;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|aspnetdb.mdf;User Instance=true" tags="">
+    <parameterEntry kind="XmlFile" scope="\\\\psf\\home\\Documents\\Visual\ Studio\ 2015\\Projects\\jasonalinton\\jasonalinton\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+</parameters>

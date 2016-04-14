@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="blogModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="blogpost">
+          <Key>
+            <PropertyRef Name="idBlogPost" />
+          </Key>
+          <Property Name="idBlogPost" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="datetime" Type="datetime" Precision="0" />
+          <Property Name="post" Type="blob" />
+          <Property Name="postition" Type="int" />
+        </EntityType>
+        <EntityType Name="blogposttags">
+          <Key>
+            <PropertyRef Name="idBlogPostTags" />
+            <PropertyRef Name="idBlogPost" />
+            <PropertyRef Name="idTags" />
+          </Key>
+          <Property Name="idBlogPostTags" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idBlogPost" Type="int" Nullable="false" />
+          <Property Name="idTags" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tags">
+          <Key>
+            <PropertyRef Name="idTags" />
+          </Key>
+          <Property Name="idTags" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tag" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <Association Name="fk_BlogPostTags_BlogPost">
+          <End Role="blogpost" Type="Self.blogpost" Multiplicity="1" />
+          <End Role="blogposttags" Type="Self.blogposttags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="blogpost">
+              <PropertyRef Name="idBlogPost" />
+            </Principal>
+            <Dependent Role="blogposttags">
+              <PropertyRef Name="idBlogPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BlogPostTags_Tags1">
+          <End Role="tags" Type="Self.tags" Multiplicity="1" />
+          <End Role="blogposttags" Type="Self.blogposttags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tags">
+              <PropertyRef Name="idTags" />
+            </Principal>
+            <Dependent Role="blogposttags">
+              <PropertyRef Name="idTags" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="blogModelStoreContainer">
+          <EntitySet Name="blogpost" EntityType="Self.blogpost" Schema="blog" store:Type="Tables" />
+          <EntitySet Name="blogposttags" EntityType="Self.blogposttags" Schema="blog" store:Type="Tables" />
+          <EntitySet Name="tags" EntityType="Self.tags" Schema="blog" store:Type="Tables" />
+          <AssociationSet Name="fk_BlogPostTags_BlogPost" Association="Self.fk_BlogPostTags_BlogPost">
+            <End Role="blogpost" EntitySet="blogpost" />
+            <End Role="blogposttags" EntitySet="blogposttags" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BlogPostTags_Tags1" Association="Self.fk_BlogPostTags_Tags1">
+            <End Role="tags" EntitySet="tags" />
+            <End Role="blogposttags" EntitySet="blogposttags" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="blogModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="blogpost">
+          <Key>
+            <PropertyRef Name="idBlogPost" />
+          </Key>
+          <Property Name="idBlogPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="datetime" Type="DateTime" />
+          <Property Name="post" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="postition" Type="Int32" />
+          <NavigationProperty Name="blogposttags" Relationship="Self.fk_BlogPostTags_BlogPost" FromRole="blogpost" ToRole="blogposttags" />
+        </EntityType>
+        <EntityType Name="blogposttag">
+          <Key>
+            <PropertyRef Name="idBlogPostTags" />
+            <PropertyRef Name="idBlogPost" />
+            <PropertyRef Name="idTags" />
+          </Key>
+          <Property Name="idBlogPostTags" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idBlogPost" Type="Int32" Nullable="false" />
+          <Property Name="idTags" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="blogpost" Relationship="Self.fk_BlogPostTags_BlogPost" FromRole="blogposttags" ToRole="blogpost" />
+          <NavigationProperty Name="tag" Relationship="Self.fk_BlogPostTags_Tags1" FromRole="blogposttags" ToRole="tags" />
+        </EntityType>
+        <EntityType Name="tag">
+          <Key>
+            <PropertyRef Name="idTags" />
+          </Key>
+          <Property Name="idTags" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tag1" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="blogposttags" Relationship="Self.fk_BlogPostTags_Tags1" FromRole="tags" ToRole="blogposttags" />
+        </EntityType>
+        <Association Name="fk_BlogPostTags_BlogPost">
+          <End Role="blogpost" Type="Self.blogpost" Multiplicity="1" />
+          <End Role="blogposttags" Type="Self.blogposttag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="blogpost">
+              <PropertyRef Name="idBlogPost" />
+            </Principal>
+            <Dependent Role="blogposttags">
+              <PropertyRef Name="idBlogPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BlogPostTags_Tags1">
+          <End Role="tags" Type="Self.tag" Multiplicity="1" />
+          <End Role="blogposttags" Type="Self.blogposttag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tags">
+              <PropertyRef Name="idTags" />
+            </Principal>
+            <Dependent Role="blogposttags">
+              <PropertyRef Name="idTags" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="blogEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="blogposts" EntityType="Self.blogpost" />
+          <EntitySet Name="blogposttags" EntityType="Self.blogposttag" />
+          <EntitySet Name="tags" EntityType="Self.tag" />
+          <AssociationSet Name="fk_BlogPostTags_BlogPost" Association="Self.fk_BlogPostTags_BlogPost">
+            <End Role="blogpost" EntitySet="blogposts" />
+            <End Role="blogposttags" EntitySet="blogposttags" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BlogPostTags_Tags1" Association="Self.fk_BlogPostTags_Tags1">
+            <End Role="tags" EntitySet="tags" />
+            <End Role="blogposttags" EntitySet="blogposttags" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="blogModelStoreContainer" CdmEntityContainer="blogEntities">
+          <EntitySetMapping Name="blogposts">
+            <EntityTypeMapping TypeName="blogModel.blogpost">
+              <MappingFragment StoreEntitySet="blogpost">
+                <ScalarProperty Name="idBlogPost" ColumnName="idBlogPost" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+                <ScalarProperty Name="post" ColumnName="post" />
+                <ScalarProperty Name="postition" ColumnName="postition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="blogposttags">
+            <EntityTypeMapping TypeName="blogModel.blogposttag">
+              <MappingFragment StoreEntitySet="blogposttags">
+                <ScalarProperty Name="idBlogPostTags" ColumnName="idBlogPostTags" />
+                <ScalarProperty Name="idBlogPost" ColumnName="idBlogPost" />
+                <ScalarProperty Name="idTags" ColumnName="idTags" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tags">
+            <EntityTypeMapping TypeName="blogModel.tag">
+              <MappingFragment StoreEntitySet="tags">
+                <ScalarProperty Name="idTags" ColumnName="idTags" />
+                <ScalarProperty Name="tag1" ColumnName="tag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

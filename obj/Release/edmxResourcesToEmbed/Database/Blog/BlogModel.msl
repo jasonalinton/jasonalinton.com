@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="blogModelStoreContainer" CdmEntityContainer="blogEntities">
+    <EntitySetMapping Name="blogposts">
+      <EntityTypeMapping TypeName="blogModel.blogpost">
+        <MappingFragment StoreEntitySet="blogpost">
+          <ScalarProperty Name="idBlogPost" ColumnName="idBlogPost" />
+          <ScalarProperty Name="datetime" ColumnName="datetime" />
+          <ScalarProperty Name="post" ColumnName="post" />
+          <ScalarProperty Name="postition" ColumnName="postition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="blogposttags">
+      <EntityTypeMapping TypeName="blogModel.blogposttag">
+        <MappingFragment StoreEntitySet="blogposttags">
+          <ScalarProperty Name="idBlogPostTags" ColumnName="idBlogPostTags" />
+          <ScalarProperty Name="idBlogPost" ColumnName="idBlogPost" />
+          <ScalarProperty Name="idTags" ColumnName="idTags" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tags">
+      <EntityTypeMapping TypeName="blogModel.tag">
+        <MappingFragment StoreEntitySet="tags">
+          <ScalarProperty Name="idTags" ColumnName="idTags" />
+          <ScalarProperty Name="tag1" ColumnName="tag" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

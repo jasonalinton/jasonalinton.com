@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="blogModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="blogpost">
+    <Key>
+      <PropertyRef Name="idBlogPost" />
+    </Key>
+    <Property Name="idBlogPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="datetime" Type="DateTime" />
+    <Property Name="post" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="postition" Type="Int32" />
+    <NavigationProperty Name="blogposttags" Relationship="Self.fk_BlogPostTags_BlogPost" FromRole="blogpost" ToRole="blogposttags" />
+  </EntityType>
+  <EntityType Name="blogposttag">
+    <Key>
+      <PropertyRef Name="idBlogPostTags" />
+      <PropertyRef Name="idBlogPost" />
+      <PropertyRef Name="idTags" />
+    </Key>
+    <Property Name="idBlogPostTags" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idBlogPost" Type="Int32" Nullable="false" />
+    <Property Name="idTags" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="blogpost" Relationship="Self.fk_BlogPostTags_BlogPost" FromRole="blogposttags" ToRole="blogpost" />
+    <NavigationProperty Name="tag" Relationship="Self.fk_BlogPostTags_Tags1" FromRole="blogposttags" ToRole="tags" />
+  </EntityType>
+  <EntityType Name="tag">
+    <Key>
+      <PropertyRef Name="idTags" />
+    </Key>
+    <Property Name="idTags" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tag1" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="blogposttags" Relationship="Self.fk_BlogPostTags_Tags1" FromRole="tags" ToRole="blogposttags" />
+  </EntityType>
+  <Association Name="fk_BlogPostTags_BlogPost">
+    <End Role="blogpost" Type="Self.blogpost" Multiplicity="1" />
+    <End Role="blogposttags" Type="Self.blogposttag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="blogpost">
+        <PropertyRef Name="idBlogPost" />
+      </Principal>
+      <Dependent Role="blogposttags">
+        <PropertyRef Name="idBlogPost" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_BlogPostTags_Tags1">
+    <End Role="tags" Type="Self.tag" Multiplicity="1" />
+    <End Role="blogposttags" Type="Self.blogposttag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tags">
+        <PropertyRef Name="idTags" />
+      </Principal>
+      <Dependent Role="blogposttags">
+        <PropertyRef Name="idTags" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="blogEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="blogposts" EntityType="Self.blogpost" />
+    <EntitySet Name="blogposttags" EntityType="Self.blogposttag" />
+    <EntitySet Name="tags" EntityType="Self.tag" />
+    <AssociationSet Name="fk_BlogPostTags_BlogPost" Association="Self.fk_BlogPostTags_BlogPost">
+      <End Role="blogpost" EntitySet="blogposts" />
+      <End Role="blogposttags" EntitySet="blogposttags" />
+    </AssociationSet>
+    <AssociationSet Name="fk_BlogPostTags_Tags1" Association="Self.fk_BlogPostTags_Tags1">
+      <End Role="tags" EntitySet="tags" />
+      <End Role="blogposttags" EntitySet="blogposttags" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
